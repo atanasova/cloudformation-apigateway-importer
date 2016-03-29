@@ -5,7 +5,7 @@ Deploying AWS Api Gateway with Cloud Formation and AWS Lambda
 
 Includes:
 <ol>
-<li>source and jar api-gateway-importer.jar</li>
+<li>Custom Java Lambda function api-gateway-importer.jar (sources and jar)</li>
 <li>cf.json - Cloud Formtaion Template</li>
 <li> MyApiGateway.json Swagger api gateway file for import</li>
 </ol>
