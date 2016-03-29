@@ -12,7 +12,7 @@ Includes:
 How to implement:
 
 1. create S3 bucket and take a note of it. Use lowercase letters, avoid using periods. Example name:  mybucket
-2. place your Api Gateway Lambda code in mybucket
+2. place your Api Gateway Lambda code (clients.zip) in mybucket in directory clients
 3. place your Swagger File MyApiGateway.json in mybucket
 4. place api-gateway-importer.jar in mybucket
 3. update cloud formation template so that it defines all your lambda functions. All defined lambda functions must be present in mybucket
