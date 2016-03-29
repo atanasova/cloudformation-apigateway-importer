@@ -37,8 +37,7 @@ How to implement:
                 },
                 "Runtime": "python2.7"
             }
-        },
-
+        }
 </pre>
 
 
