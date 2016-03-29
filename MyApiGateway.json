@@ -1,0 +1,477 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "2016-03-23T16:46:30Z",
+        "title": "MyApi"
+    },
+    "basePath": "/",
+    "schemes": [
+                "https"
+                ],
+    "paths": {
+        "/clients": {
+            "get": {
+                "consumes": [
+                             "application/json"
+                             ],
+                "produces": [
+                             "application/json"
+                             ],
+                "parameters": [
+                               {
+                               "in": "body",
+                               "name": "ClientModel",
+                               "required": true,
+                               "schema": {
+                               "$ref": "#/definitions/ClientModel"
+                               }
+                               }
+                               ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "credentials": "arn:aws:iam::12345678910:role/tany-CFNRole-1UPNZ8950P7JC",
+                    "responses": {
+                        "\\(pg8000.core.ProgrammingError.*": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        },
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'http://tanya.static.dashboard.rbn.com'"
+                            }
+                        }
+                    },
+                    "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:12345678910:function:tany-GetClientsFunction-1E720VFRY932A/invocations",
+                    "httpMethod": "POST",
+                    "type": "aws"
+                }
+            },
+            "post": {
+                "consumes": [
+                             "application/json"
+                             ],
+                "produces": [
+                             "application/json"
+                             ],
+                "parameters": [
+                               {
+                               "in": "body",
+                               "name": "ClientModel",
+                               "required": true,
+                               "schema": {
+                               "$ref": "#/definitions/ClientModel"
+                               }
+                               }
+                               ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/Empty"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "credentials": "arn:aws:iam::12345678910:role/tany-CFNRole-1UPNZ8950P7JC",
+                    "responses": {
+                        "\\(pg8000.core.ProgrammingError.*": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        },
+                        "Not Found.*": {
+                            "statusCode": "404",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        },
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'http://tanya.static.dashboard.rbn.com'"
+                            }
+                        },
+                        "('Data Integrity Exception|Validation Exception):(.|\\n)*": {
+                            "statusCode": "400",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        }
+                    },
+                    "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:12345678910:function:tany-PostClientsFunction-SR53NMUKYWA1/invocations",
+                    "httpMethod": "POST",
+                    "type": "aws"
+                }
+            }
+        },
+        "/clients/{id}": {
+            "get": {
+                "consumes": [
+                             "application/json"
+                             ],
+                "produces": [
+                             "application/json"
+                             ],
+                "parameters": [
+                               {
+                               "name": "id",
+                               "in": "path",
+                               "required": true,
+                               "type": "string"
+                               },
+                               {
+                               "in": "body",
+                               "name": "ClientModel",
+                               "required": true,
+                               "schema": {
+                               "$ref": "#/definitions/ClientModel"
+                               }
+                               }
+                               ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "credentials": "arn:aws:iam::12345678910:role/tany-CFNRole-1UPNZ8950P7JC",
+                    "responses": {
+                        "\\(pg8000.core.ProgrammingError.*": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"error\" : \"Internal Server Error\"\n}"
+                            }
+                        },
+                        "Not Found.*": {
+                            "statusCode": "404",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        },
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'http://tanya.static.dashboard.rbn.com'"
+                            }
+                        },
+                        "Validation Exception:.*": {
+                            "statusCode": "400",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        }
+                    },
+                    "requestTemplates": {
+                        "application/json": "{\"id\":\"$input.params('id')\"}"
+                    },
+                    "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:12345678910:function:tany-GetClientFunction-4Z1H55RXW9ME/invocations",
+                    "httpMethod": "POST",
+                    "type": "aws"
+                }
+            },
+            "put": {
+                "consumes": [
+                             "application/json"
+                             ],
+                "produces": [
+                             "application/json"
+                             ],
+                "parameters": [
+                               {
+                               "name": "id",
+                               "in": "path",
+                               "required": true,
+                               "type": "string"
+                               },
+                               {
+                               "in": "body",
+                               "name": "ClientModel",
+                               "required": true,
+                               "schema": {
+                               "$ref": "#/definitions/ClientModel"
+                               }
+                               }
+                               ],
+                "responses": {
+                    "200": {
+                        "description": "200 response",
+                        "schema": {
+                            "$ref": "#/definitions/Empty"
+                        },
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 response"
+                    },
+                    "500": {
+                        "description": "500 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "credentials": "arn:aws:iam::12345678910:role/tany-CFNRole-1UPNZ8950P7JC",
+                    "responses": {
+                        "\\(pg8000.core.ProgrammingError.*": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        },
+                        "Not Found.*": {
+                            "statusCode": "404",
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        },
+                        "default": {
+                            "statusCode": "200",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'http://tanya.static.dashboard.rbn.com'"
+                            }
+                        },
+                        "('Data Integrity Exception|Validation Exception):(.|\\n)*": {
+                            "statusCode": "400",
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        }
+                    },
+                    "requestTemplates": {
+                        "application/json": "{\n  \"id\" : \"$input.params('id')\",\n  \"name\": $input.json('$.name'),\n  \"rating\": $input.json('$.rating')\n}"
+                    },
+                    "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:12345678910:function:tany-UpdateClientFunction-1LZH05C5G9UOL/invocations",
+                    "httpMethod": "POST",
+                    "type": "aws"
+                }
+            },
+            "delete": {
+                "consumes": [
+                             "application/json"
+                             ],
+                "produces": [
+                             "application/json"
+                             ],
+                "parameters": [
+                               {
+                               "name": "id",
+                               "in": "path",
+                               "required": true,
+                               "type": "string"
+                               }
+                               ],
+                "responses": {
+                    "200": {
+                        "description": "200 response"
+                    },
+                    "400": {
+                        "description": "400 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "404 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500 response",
+                        "headers": {
+                            "Access-Control-Allow-Origin": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "x-amazon-apigateway-integration": {
+                    "credentials": "arn:aws:iam::12345678910:role/tany-CFNRole-1UPNZ8950P7JC",
+                    "responses": {
+                        "\\(pg8000.core.ProgrammingError.*": {
+                            "statusCode": "500",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        },
+                        "Not Found.*": {
+                            "statusCode": "404",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        },
+                        "default": {
+                            "statusCode": "200"
+                        },
+                        "Validation Exception:.*": {
+                            "statusCode": "400",
+                            "responseParameters": {
+                                "method.response.header.Access-Control-Allow-Origin": "'*'"
+                            },
+                            "responseTemplates": {
+                                "application/json": "#set($inputRoot = $input.path('$'))\n{\n  \"message\" : $input.path('$.errorMessage'),\n  \"error\": $input.path('$.errorType')\n}"
+                            }
+                        }
+                    },
+                    "requestTemplates": {
+                        "application/json": "{\"id\":\"$input.params('id')\"}"
+                    },
+                    "uri": "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:12345678910:function:tany-DeleteClientFunction-OTXJV4AZUYYO/invocations",
+                    "httpMethod": "POST",
+                    "type": "aws"
+                }
+            }
+        } 
+    },
+    "definitions": {
+        "ClientModel": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "string"
+                },
+                "name": {
+                    "type": "string"
+                },
+                "rating": {
+                    "type": "string"
+                },
+                "created": {
+                    "type": "string"
+                }
+            }
+        },
+        "Empty": {
+            "type": "object"
+        }
+       
+    }
+}

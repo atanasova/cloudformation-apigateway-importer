@@ -1,0 +1,38 @@
+{
+  "StackId": "arn:aws:cloudformation:us-east-1:EXAMPLE/stack-name/guid",
+  "ResponseURL": "http://google.com",
+  "ResourceProperties": {
+    "StackName": "stack-name",
+    "SwaggerFile":"MyApiGateway.json",
+    "S3Bucket": "cloudformation-apigateway-importer",
+    "StaticHostingUrl": "tanya.static.hosting.rbn.com",
+    "Role":"arn:aws:iam::1234567810:role/APIGatewayLambdaInvokeRole",
+    
+    "RefApi":[{ "FunctionName":"getHello",
+            	"Path":"/hello",
+            	"Method":"get",
+            	"FunctionArn": "arn:aws:lambda:us-east-1:1234567810:function:getHello"
+            },
+            {	"FunctionName":"postHello",
+            	"Path":"/hello",
+            	"Method":"post",
+            	"FunctionArn": "arn:aws:lambda:us-east-1:1234567810:function:postHello"
+            },
+            {	"FunctionName":"getHello",
+            	"Path":"/world",
+            	"Method":"get",
+            	"FunctionArn": "arn:aws:lambda:us-east-1:1234567810:function:getHello"
+            },
+            { 	"FunctionName":"postHello",
+            	"Path":"/world",
+            	"Method":"post",
+            	"FunctionArn": "arn:aws:lambda:us-east-1:1234567810:function:postHello"
+            }
+            ]
+  },
+  "RequestType": "Create",
+  "ResourceType": "Custom::TestResource",
+  "RequestId": "unique id for this create request",
+  "LogicalResourceId": "MyTestResource",
+  "PhysicalResourceId":"1auwv74cjb"
+}

@@ -1,0 +1,187 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Description": "Creating APIGateway Roles, policies and resources",
+    "Parameters": {
+        "SwaggerFile": {
+            "Type": "String",
+            "Description": "Api Gateway Swagger File, example: MyApiGateway.json"
+        },
+        "S3BucketName": {
+            "Type": "String",
+            "Description": "where your lambda code is, example: code.dashboard.rbn.com, use lowercase"
+        },
+        "AccountName": {
+            "Type": "String",
+            "Description": "use your account name, no spaces, example: tanya, use lowercase"
+        }
+    },
+    "Resources": {
+        "CFNRole": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+                "AssumeRolePolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [{
+                                  "Action": ["sts:AssumeRole"],
+                                  "Principal": {
+                                    "Service": ["apigateway.amazonaws.com","lambda.amazonaws.com","s3.amazonaws.com"]
+                                  },
+                                  "Effect": "Allow",
+                                  "Sid": ""
+                                  }]
+                },
+                
+                "Path": "/"
+            }
+        },
+        "CFNRolePolicy": {
+            "Type": "AWS::IAM::ManagedPolicy",
+            "Properties": {
+                "PolicyDocument":{
+                    "Version": "2012-10-17",
+                    "Statement": [{
+                                  "Effect": "Allow",
+                                  "Resource": ["*"],
+                                  "Action": ["lambda:*",
+                                             "apigateway:*",
+                                             "logs:*",
+                                             "cloudformation:Describe*",
+                                             "s3:*",
+                                             "iam:PassRole",
+                                             "iam:*",
+                                             "execute-api:Invoke"
+                                             ]
+                                  }]
+                },
+                "Roles": [ { "Ref": "CFNRole"} ]
+            }
+        },
+         "StaticS3Bucket":{
+            "Type" : "AWS::S3::Bucket",
+            "Properties" : {
+                "BucketName" :{"Fn::Join": [".",[{ "Ref": "AccountName" }, "static.dashboard.rbn.com"]]},
+                "WebsiteConfiguration" : {
+                    "ErrorDocument" : "error.html",
+                    "IndexDocument" : "index.html"
+                }
+            }
+        },
+        "GetClientsFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Handler": "clients.get_clients",
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "Code": {
+                    "S3Bucket" : { "Ref": "S3BucketName" },
+                    "S3Key" : "clients/clients.zip"
+                },
+                "Runtime": "python2.7"
+            }
+        },
+        "PostClientsFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Handler": "clients.post_client",
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "Code": {
+                    "S3Bucket" : { "Ref": "S3BucketName" },
+                    "S3Key" : "clients/clients.zip"
+                },
+                "Runtime": "python2.7"
+            }
+        },
+        "GetClientFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Handler": "clients.get_client",
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "Code": {
+                    "S3Bucket" : { "Ref": "S3BucketName" },
+                    "S3Key" : "clients/clients.zip"
+                },
+                "Runtime": "python2.7"
+            }
+        },
+        "UpdateClientFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Handler": "clients.update_client",
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "Code": {
+                    "S3Bucket" : { "Ref": "S3BucketName" },
+                    "S3Key" : "clients/clients.zip"
+                },
+                "Runtime": "python2.7"
+            }
+        },
+        "DeleteClientFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Handler": "clients.delete_client",
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "Code": {
+                    "S3Bucket" : { "Ref": "S3BucketName" },
+                    "S3Key" : "clients/clients.zip"
+                },
+                "Runtime": "python2.7"
+            }
+        },
+        "SetupApiGatewayFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Handler": "com.rbn.dashboard.Hello",
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "Code": {
+                    "S3Bucket" : { "Ref": "S3BucketName" },
+                    "S3Key" : "api-gateway-importer-0.0.1-SNAPSHOT.jar"
+                },
+                "Runtime": "java8",
+                "Timeout":"300",
+                "MemorySize":"512"
+            }
+        },
+        "UseGateway": {
+            "Type": "Custom::UseGateway",
+            "Properties": {
+                "ServiceToken": { "Fn::GetAtt": [ "SetupApiGatewayFunction", "Arn"] },
+                "SwaggerFile": { "Ref": "SwaggerFile" },
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "StaticHostingUrl": { "Ref" : "StaticS3Bucket"},
+                "S3Bucket":{ "Ref": "S3BucketName" },
+                "RefApi":[{
+                            "Path":"/clients",
+                            "Method":"get",
+                            "FunctionName":{ "Ref": "GetClientsFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "GetClientsFunction", "Arn"]}
+                          },
+                          {
+                            "Path":"/clients",
+                            "Method":"post",
+                            "FunctionName":{ "Ref": "PostClientsFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "PostClientsFunction", "Arn"]}
+                          },
+                          {
+                            "Path":"/clients/{id}",
+                            "Method":"get",
+                            "FunctionName":{ "Ref": "GetClientFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "GetClientFunction", "Arn"]}
+                          },
+                          {
+                            "Path":"/clients/{id}",
+                            "Method":"put",
+                            "FunctionName":{ "Ref": "UpdateClientFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "UpdateClientFunction", "Arn"]}
+                          },
+                          {
+                            "Path":"/clients/{id}",
+                            "Method":"delete",
+                            "FunctionName":{ "Ref": "DeleteClientFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "DeleteClientFunction", "Arn"]}
+                          }
+                        ]
+            }
+        }
+    }
+    
+}
+
