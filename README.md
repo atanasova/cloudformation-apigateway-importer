@@ -22,7 +22,7 @@ How to implement:
 <li>Create the stack </li>
 </ol>
 
-<p>For example in cf.json (our CloudFormation template), the function UpdateClientFunction will need clients.zip to be present in <i><b>mybucket</b></i> in directory clients.</p> clients.zip is not a part of the repsitory. Use zip r9 clients.zip clients.py to zip up a file for Lambda and upload to s3 later
+<p>For example in cf.json (our CloudFormation template), the function UpdateClientFunction will need clients.zip to be present in <i><b>mybucket</b></i> in directory clients.</p> clients.zip is not a part of the repsitory. Use zip -r9 clients.zip clients.py to zip up a file for Lambda and upload to <i><b>mybucket</b></i>
  
 
  <pre>
@@ -42,7 +42,7 @@ How to implement:
 </pre>
 
 
-Next also in cf.json, update the UseGateway with all your api methods. The Java Lambda function (api-gateway-importer.jar) provided here with sources will loop through the Swagger Api Gateway file and update all the methods with the Cloud Formation generated Lambda Functions and Cloud Formation generated Role/Policy Arn. This will gurantee you that your Api Gateway will have the permissions to invoke your lambda functions. 
+Next also in cf.json, update the UseGateway with all your api methods. The Java Lambda function (api-gateway-importer.jar) provided here with sources will loop through the Swagger Api Gateway file and update all the methods with the CloudFormation generated Lambda Functions and CloudFormation generated Role/Policy Arn. This will gurantee you that your Api Gateway will have the permissions to invoke your lambda functions. 
 
 <pre>
 "UseGateway": {
