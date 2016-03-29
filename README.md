@@ -8,7 +8,7 @@ But here at RBN, we don't just stop when AWS stops. So we took a sample CloudFor
 Includes:
 <ol>
 <li>Custom Java Lambda function api-gateway-importer.jar (sources and jar)</li>
-<li>cf.json - Cloud Formation Template</li>
+<li>cf.json - CloudFormation Template</li>
 <li>MyApiGateway.json Swagger Api Gateway json file for import</li>
 </ol>
 
@@ -18,11 +18,11 @@ How to implement:
 <li>Place your Api Gateway Lambda code (clients.zip) in  <i><b>mybucket</b></i> in directory clients</li>
 <li>Place your Swagger File MyApiGateway.json in  <i><b>mybucket</b></i></li>
 <li>Place api-gateway-importer.jar in  <i><b>mybucket</b></i></li>
-<li>Update cloud formation template so that it defines all your lambda functions. All defined lambda functions must be present in  <i><b>mybucket</b></i></li>
+<li>Update CloudFormation template so that it defines all your lambda functions. All defined Lambda functions must be present in  <i><b>mybucket</b></i></li>
 <li>Create the stack </li>
 </ol>
 
-<p>For example in cf.json (our cloud formation template), the function UpdateClientFunction will need clients.zip to be present in <i><b>mybucket</b></i> in directory clients.</p>
+<p>For example in cf.json (our CloudFormation template), the function UpdateClientFunction will need clients.zip to be present in <i><b>mybucket</b></i> in directory clients.</p> clients.zip is not a part of the repsitory. Use zip r9 clients.zip clients.py to zip up a file for Lambda and upload to s3 later
  
 
  <pre>
