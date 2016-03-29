@@ -1,5 +1,5 @@
 # cloudformation-apigateway-importer
-Configuring and deploying AWS Api Gateway with Cloud Formation and AWS Lambda
+<h5>Configuring and deploying AWS Api Gateway with Cloud Formation and AWS Lambda</h5>
 
 
 The release of AWS Lambda and AWS Api Gateway has made serverless Microservice architecture possible and viable option in building cost effective web apps. Considering the price of 1 million lambda executions is only $0.20 a small web app can run nearly free in the Cloud. There is only one problem for now, AWS has not included AWS Api Gateway in Cloud Formation, which makes continous integration and deployment of Api Gateway a hard if not impossible task. AWS has released a <a href="https://github.com/awslabs/aws-apigateway-importer" target="_blank">java library</a> (a cli tool to import the gateway, which is basically a shell script wrapped around a java jar) and officially endorsed Swagger File for Gateway's acceptable format. 
