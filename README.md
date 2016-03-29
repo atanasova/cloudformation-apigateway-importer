@@ -15,7 +15,7 @@ How to implement:
 2. place your Api Gateway Lambda code in mybucket
 3. place your Swagger File MyApiGateway.json in mybucket
 4. place api-gateway-importer.jar in mybucket
-3. update cloud formation template so that it defines all your lambda functions.
+3. update cloud formation template so that it defines all your lambda functions. All defined lambda functions must be present in mybucket
 4. Create the stack 
 
 
