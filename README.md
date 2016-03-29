@@ -19,7 +19,7 @@ How to implement:
 4. Create the stack 
 
 
-<p>For example, the function UpdateClientFunction will need clients.zip to be present in <i><b>mybucket</b></i> in directory clients.</p>
+<p>For example in cf.json (our cloud formation template), the function UpdateClientFunction will need clients.zip to be present in <i><b>mybucket</b></i> in directory clients.</p>
  
 
  <pre>
@@ -39,7 +39,7 @@ How to implement:
 </pre>
 
 
-Next, update the UseGateway with all your api methods. The Java Lambda function provided here with sources will loop through the Swagger Api Gateway file and update all the methods with the Cloud Formation generated Lambda Functions and Cloud Formation generated Role/Policy Arn. This will gurantee you that your Api Gateway will have the permissions to invoke your lambda functions. 
+Next also in cf.json, update the UseGateway with all your api methods. The Java Lambda function (api-gateway-importer.jar) provided here with sources will loop through the Swagger Api Gateway file and update all the methods with the Cloud Formation generated Lambda Functions and Cloud Formation generated Role/Policy Arn. This will gurantee you that your Api Gateway will have the permissions to invoke your lambda functions. 
 
 <pre>
 "UseGateway": {
