@@ -19,5 +19,19 @@ How to implement:
 4. Create the stack 
 
 
+ For example, the function UpdateClientFunction will need clients.zip to be present in mybucket in directory clients.
+ "UpdateClientFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+                "Handler": "clients.update_client",
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "Code": {
+                    "S3Bucket" : { "Ref": "S3BucketName" },
+                    "S3Key" : "clients/clients.zip"
+                },
+                "Runtime": "python2.7"
+            }
+        }
+
 
 
