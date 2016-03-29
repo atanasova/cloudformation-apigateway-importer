@@ -3,7 +3,7 @@
 
 
 The releases of AWS Lambda and AWS Api Gateway have made serverless Microservice architecture possible and viable option in building cost effective web apps. Considering the price of 1 million AWS Lambda executions is only $0.20 a small web app can run nearly free in the Cloud. There is only one problem for now, AWS has not included AWS Api Gateway in CloudFormation, which makes continous integration and deployment of Api Gateway a hard if not impossible task. AWS has released a <a href="https://github.com/awslabs/aws-apigateway-importer" target="_blank">java library</a> (a cli tool to import the gateway, which is basically a shell script wrapped around a java jar) and officially endorsed Swagger File for Api Gateway's acceptable (json) format. 
-But here at RBN, we don't just stop when AWS stops. So we took their java library and imported it into our java Lambda function. Then we called the function with Cloud Formation Custom Resource and deployed the Gateway.
+But here at RBN, we don't just stop when AWS stops. So we took their java library and imported it into our java Lambda function. Then we called the function with CloudFormation Custom Resource and deployed the Gateway.
 
 Includes:
 <ol>
