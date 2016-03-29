@@ -19,7 +19,7 @@ How to implement:
 4. Create the stack 
 
 
- For example, the function UpdateClientFunction will need clients.zip to be present in mybucket in directory clients.
+<p>For example, the function UpdateClientFunction will need clients.zip to be present in <i><b>mybucket</b></i> in directory clients.</p>
  
 
  <pre>
@@ -37,3 +37,52 @@ How to implement:
         },
 
 </pre>
+
+
+Next, update the UseGateway with all your api methods
+
+<pre>
+"UseGateway": {
+            "Type": "Custom::UseGateway",
+            "Properties": {
+                "ServiceToken": { "Fn::GetAtt": [ "SetupApiGatewayFunction", "Arn"] },
+                "SwaggerFile": { "Ref": "SwaggerFile" },
+                "Role": { "Fn::GetAtt" : ["CFNRole", "Arn"] },
+                "StaticHostingUrl": { "Ref" : "StaticS3Bucket"},
+                "S3Bucket":{ "Ref": "S3BucketName" },
+                "RefApi":[{
+                            "Path":"/clients",
+                            "Method":"get",
+                            "FunctionName":{ "Ref": "GetClientsFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "GetClientsFunction", "Arn"]}
+                          },
+                          {
+                            "Path":"/clients",
+                            "Method":"post",
+                            "FunctionName":{ "Ref": "PostClientsFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "PostClientsFunction", "Arn"]}
+                          },
+                          {
+                            "Path":"/clients/{id}",
+                            "Method":"get",
+                            "FunctionName":{ "Ref": "GetClientFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "GetClientFunction", "Arn"]}
+                          },
+                          {
+                            "Path":"/clients/{id}",
+                            "Method":"put",
+                            "FunctionName":{ "Ref": "UpdateClientFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "UpdateClientFunction", "Arn"]}
+                          },
+                          {
+                            "Path":"/clients/{id}",
+                            "Method":"delete",
+                            "FunctionName":{ "Ref": "DeleteClientFunction" },
+                            "FunctionArn":{"Fn::GetAtt": [ "DeleteClientFunction", "Arn"]}
+                          }
+                        ]
+            }
+        }
+
+</pre>
+
