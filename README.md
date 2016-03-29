@@ -39,7 +39,7 @@ How to implement:
 </pre>
 
 
-Next, update the UseGateway with all your api methods
+Next, update the UseGateway with all your api methods. The Java Lambda function provided here with sources will loop through the Swagger Api Gateway file and update all the methods with the Cloud Formation generated Lambda Functions and Cloud Formation generated Role/Policy Arn. This will gurantee you that your Api Gateway will have the permissions to invoke your lambda functions. 
 
 <pre>
 "UseGateway": {
