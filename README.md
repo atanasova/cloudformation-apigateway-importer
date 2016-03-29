@@ -20,6 +20,8 @@ How to implement:
 
 
  For example, the function UpdateClientFunction will need clients.zip to be present in mybucket in directory clients.
+ 
+
  "UpdateClientFunction": {
             "Type": "AWS::Lambda::Function",
             "Properties": {
@@ -31,7 +33,5 @@ How to implement:
                 },
                 "Runtime": "python2.7"
             }
-        }
-
-
+        },
 
